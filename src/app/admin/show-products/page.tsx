@@ -91,7 +91,7 @@ const ShowProduct = () => {
 										<td className="px-6 py-4">{item.brand}</td>
 										<td className="px-6 mt-10 flex gap-2">
 											<Link
-												href="/admin/edit-products"
+												href={`/admin/edit-products/${item._id}`}
 												className="font-medium text-blue-600 text-xl">
 												<FaEdit />
 											</Link>
