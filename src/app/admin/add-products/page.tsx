@@ -1,9 +1,12 @@
 "use client";
+import axiosInstance from "@/lib/axios";
+import axios from "axios";
 import {
 	CldUploadButton,
 	CloudinaryUploadWidgetResults,
 } from "next-cloudinary";
 import React, { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
 	const [name, setName] = useState<string>("");
@@ -20,9 +23,29 @@ const AddProduct = () => {
 		}
 	};
 
-	const addProduct = (e: FormEvent) => {
+	const addProduct = async (e: FormEvent) => {
 		e.preventDefault();
-		console.log(name, price, description, category, brand);
+		try {
+			const response = await axiosInstance.post("/api/products", {
+				name,
+				category,
+				price,
+				brand,
+				imageUrl,
+				description,
+			});
+			const data = response.data;
+			toast.success(data.message);
+			setBrand("");
+			setCategory("");
+			setName("");
+			setPrice("");
+			setImageUrl("");
+			setDescription("");
+		} catch (error: any) {
+			const errorMessage = "Failed to add product, Check inputs properly";
+			toast.error(errorMessage);
+		}
 	};
 
 	return (
