@@ -7,6 +7,9 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/sections/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  daisyui: {
+    themes: ["light", "dark", "cupcake"],
+  },
   theme: {
     extend: {
       colors: {
@@ -15,6 +18,8 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('daisyui'),
+  ],
 };
 export default config;
