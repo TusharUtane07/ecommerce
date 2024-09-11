@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import Footer from "@/sections/Footer";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -30,8 +31,9 @@ export default function RootLayout({
 				<link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
 			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+				className={`${geistSans.variable} ${geistMono.variable} antialiased mx-2`}>
 				{children}
+				<Footer />
 				<Toaster></Toaster>
 			</body>
 		</html>
