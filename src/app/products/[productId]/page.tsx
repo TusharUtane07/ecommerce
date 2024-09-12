@@ -1,15 +1,14 @@
 "use client";
 import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
-import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaAngleRight } from "react-icons/fa";
 import { MdHome } from "react-icons/md";
 
 // TODO: add proper types
+//BUG: fix that if there is no product with that id show no product found
 const ProductDetails = ({ params }: any) => {
 	const [productCartCount, setProductCartCount] = useState<number>(1);
 

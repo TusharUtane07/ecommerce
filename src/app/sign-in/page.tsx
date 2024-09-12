@@ -1,9 +1,51 @@
-import React from 'react'
+"use client";
+import axiosInstance from "@/lib/axios";
+import { useRouter } from "next/navigation";
+import React, { FormEvent, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
-  return (
-    <div>SignIn</div>
-  )
-}
+	const [email, setEmail] = useState<string>("");
+	const [password, setPassword] = useState<string>("");
 
-export default SignIn
+	const router = useRouter();
+
+	const signInUser = async (e: FormEvent) => {
+		e.preventDefault();
+		try {
+			const user = await axiosInstance.post("/api/sign-in/", {
+				email,
+				password,
+			});
+			const data = await user.data;
+			if (data.result) {
+				toast.success("Signed in Successfully");
+				router.push("/");
+			}
+		} catch (error: any) {
+			toast.error("user not found");
+		}
+	};
+
+	return (
+		<div className="lg:py-40">
+			<form>
+				<input
+					type="email"
+					placeholder="Email"
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
+				/>
+				<input
+					type="password"
+					placeholder="Password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+				/>
+				<button onClick={signInUser}>Sign In</button>
+			</form>
+		</div>
+	);
+};
+
+export default SignIn;

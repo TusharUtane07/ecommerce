@@ -1,6 +1,8 @@
 "use client";
+import Loader from "@/components/Loader";
+import useGetUser from "@/hooks/useGetUser";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaRegHeart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -8,7 +10,13 @@ import { RxCross1 } from "react-icons/rx";
 
 const Header = () => {
 	const [nav, setNav] = useState<boolean>(false);
+	const { user, loading } = useGetUser();
 
+	if (loading) {
+		return <Loader />;
+	}
+
+	console.log(user);
 	return (
 		<>
 			<div className="flex items-center justify-between z-10 lg:flex fixed lg:my-0 w-full mx-auto bg-white top-0 p-5 border-b border-black/10">
@@ -38,13 +46,19 @@ const Header = () => {
 							<AiOutlineShoppingCart />{" "}
 						</Link>
 					</div>
-					<div>
-						<img
-							src={"assets/p1.jpg"}
-							alt=""
-							className="w-6 h-6 rounded-full"
-						/>
-					</div>
+					{user && user?.username?.length > 0 ? (
+						<div>
+							<img
+								src={"assets/p1.jpg"}
+								alt=""
+								className="w-6 h-6 rounded-full"
+							/>
+						</div>
+					) : (
+						<div>
+							<Link href={"/sign-in"}>Sign In</Link>
+						</div>
+					)}
 				</div>
 				<div
 					className="text-xl md:text-2xl cursor-pointer lg:hidden"
