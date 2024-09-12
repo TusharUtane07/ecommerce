@@ -39,7 +39,7 @@ const WishList = () => {
 	}
 
 	return (
-		<section className="py-24">
+		<section className="py-24 lg:py-40">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<h2 className="font-manrope font-bold text-4xl text-black mb-8 max-lg:text-center">
 					Wishlist

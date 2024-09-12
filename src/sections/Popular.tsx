@@ -40,9 +40,7 @@ const Featured = ({ heading, products }: propsType) => {
 												₹{item.price}
 											</h6>
 										</div>
-										<div>
-											<FaRegHeart />
-										</div>
+										<div>{/* <FaRegHeart /> */}</div>
 									</div>
 								</Link>
 							);

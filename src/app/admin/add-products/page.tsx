@@ -51,7 +51,7 @@ const AddProduct = () => {
 	};
 
 	return (
-		<section className="py-24 relative">
+		<section className="py-24 lg:py-40 relative">
 			<div className="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto">
 				<div className="w-full flex-col justify-start items-start lg:gap-14 md:gap-10 gap-8 inline-flex">
 					<div className="w-full flex-col justify-center items-center gap-4 flex">

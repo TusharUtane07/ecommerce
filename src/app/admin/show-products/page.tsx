@@ -57,7 +57,7 @@ const ShowProduct = () => {
 	}
 
 	return (
-		<div className="py-24">
+		<div className="py-24 lg:py-40">
 			<div className="w-full flex-col justify-center items-center gap-4 flex">
 				<h2 className="text-center text-gray-900 text-4xl font-bold font-manrope leading-normal">
 					Show Products
