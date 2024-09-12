@@ -1,12 +1,16 @@
 "use client";
+import axiosInstance from "@/lib/axios";
+import { ProductT } from "@/models/Product";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaAngleRight } from "react-icons/fa";
 import { MdHome } from "react-icons/md";
 
-const ProductDetails = () => {
+// TODO: add proper types
+const ProductDetails = ({ params }: any) => {
 	const [productCartCount, setProductCartCount] = useState<number>(1);
 
 	const addToWishList = () => {
@@ -29,6 +33,26 @@ const ProductDetails = () => {
 		setProductCartCount(productCartCount - 1);
 	};
 
+	const [product, setProduct] = useState<ProductT>();
+
+	const productId = params.productId;
+
+	const fetchProducts = async () => {
+		try {
+			const response = await axiosInstance.get(`/api/products/${productId}`);
+			const data = response.data;
+			if (data.result) {
+				setProduct(data.product);
+			}
+		} catch (error: any) {
+			toast.error(error.message);
+		}
+	};
+
+	useEffect(() => {
+		fetchProducts();
+	}, []);
+
 	return (
 		<section className="relative mx-4">
 			<div className="w-full mx-auto px-4 sm:px-6 lg:px-0">
@@ -36,10 +60,10 @@ const ProductDetails = () => {
 					<div className="img">
 						<div className="img-box h-full max-lg:mx-auto p-5">
 							<img
-								src="https://pagedone.io/asset/uploads/1700471600.png"
+								src={product?.imageUrl}
 								alt="Yellow Tropical Printed Shirt image"
 								className="max-lg:mx-auto lg:ml-auto 
-								rounded-xl object-cover h-[350px] sm:h-[400px] md:h-[500px]"
+								rounded-xl object-contain  md:h-[500px]"
 							/>
 						</div>
 					</div>
@@ -58,13 +82,13 @@ const ProductDetails = () => {
 								</span>
 							</p>
 							<h2 className="font-manrope font-bold text-3xl leading-10 text-gray-900 mb-2 capitalize">
-								Basic Yellow Tropical Printed Shirt
+								{product?.name}
 							</h2>
 							<div className="flex flex-col sm:flex-row sm:items-center mb-6">
-								<h6 className="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5 sm:border-r border-gray-200 mr-5">
-									$220
+								<h6 className="font-manrope font-semibold text-2xl leading-9 text-gray-900 pr-5   mr-5">
+									₹{product?.price}
 								</h6>
-								<div className="flex items-center gap-2">
+								{/* <div className="flex items-center gap-2">
 									<div className="flex items-center gap-1">
 										<svg
 											width={20}
@@ -160,16 +184,10 @@ const ProductDetails = () => {
 									<span className="pl-2 font-normal leading-7 text-gray-500 text-sm ">
 										1624 review
 									</span>
-								</div>
+								</div> */}
 							</div>
 							<p className="text-gray-500 text-base font-normal mb-5">
-								Introducing our vibrant Basic Yellow Tropical Printed Shirt - a
-								celebration of style and sunshine! Embrace the essence of summer
-								wherever you go with this eye-catching piece that effortlessly
-								blends comfort and tropical flair.{" "}
-								<a href="#" className="text-indigo-600">
-									More....
-								</a>
+								{product?.description}
 							</p>
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-8">
 								<div className="flex sm:items-center sm:justify-center w-full">
@@ -261,8 +279,10 @@ const ProductDetails = () => {
 									Add to cart
 								</button>
 							</div>
-							<div onClick={addToWishList} className="flex items-center gap-3">
-								<button className="group transition-all duration-500 p-4 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
+							<div className="flex items-center gap-3">
+								<button
+									onClick={addToWishList}
+									className="group transition-all duration-500 p-4 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										width={26}

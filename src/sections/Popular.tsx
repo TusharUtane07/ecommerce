@@ -21,7 +21,7 @@ const Featured = ({ heading, products }: propsType) => {
 							return (
 								<Link
 									key={String(item._id)}
-									href="javascript:;"
+									href={`products/${item._id}`}
 									className="mx-auto border border-black/10 p-2 rounded-xl sm:mr-0 group cursor-pointer lg:mx-auto bg-white transition-all duration-500">
 									<div>
 										<img

@@ -34,10 +34,9 @@ const ProductSchema = new Schema<ProductT>({
   },
   brand: {
     type: String,
-    required: [true, "Product brand is required"], // Corrected error message
+    required: [true, "Product brand is required"],
   },
 });
 
-// Create and export the Product model
 const Product = models.Product || model<ProductT>("Product", ProductSchema);
 export default Product;
