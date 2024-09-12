@@ -11,7 +11,7 @@ const Header = () => {
 
 	return (
 		<>
-			<div className="flex items-center justify-between mx-6 my-3 md:mx-10 md:my-5 bg-white z-10 lg:flex lg:fixed lg:my-0 w-full lg:mx-auto lg:bg-white lg:top-0 lg:p-5 lg:border-b lg:border-black/10">
+			<div className="flex items-center justify-between z-10 lg:flex fixed lg:my-0 w-full mx-auto bg-white top-0 p-5 border-b border-black/10">
 				<div className="font-semibold text-xl md:text-2xl">
 					<Link href={"/"}>Nexa</Link>
 				</div>
@@ -55,8 +55,8 @@ const Header = () => {
 			<div
 				className={
 					nav
-						? "fixed top-0 left-0 w-screen h-screen bg-white text-black  z-10 duration-700"
-						: "fixed top-0 left-[-100%] w-[300px] h-screen bg-white  text-black z-10 duration-700"
+						? "fixed top-0 left-0 w-screen h-full bg-white text-black  z-10 duration-700"
+						: "fixed top-0 left-[-100%] w-[300px]  bg-white  text-black z-10 duration-700"
 				}>
 				<div className="flex justify-between mx-6 my-3 md:my-5 md:mx-10">
 					<div className="font-semibold text-xl md:text-2xl">Tushar.dev</div>

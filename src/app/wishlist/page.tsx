@@ -6,7 +6,7 @@ import { User } from "@/models/User";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaRegHeart } from "react-icons/fa";
+import { BiTrash } from "react-icons/bi";
 
 const WishList = () => {
 	const [wishlist, setWishlist] = useState<
@@ -70,7 +70,7 @@ const WishList = () => {
 											</h6>
 										</div>
 										<div>
-											<FaRegHeart />
+											<BiTrash />
 										</div>
 									</div>
 								</Link>
