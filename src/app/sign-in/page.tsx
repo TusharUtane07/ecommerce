@@ -1,5 +1,6 @@
 "use client";
 import axiosInstance from "@/lib/axios";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -29,6 +30,7 @@ const SignIn = () => {
 
 	return (
 		<div className="lg:py-40">
+			<Link href={"/"}></Link>
 			<form>
 				<input
 					type="email"
