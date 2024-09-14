@@ -4,6 +4,7 @@ import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
 import CtaOne from "@/sections/Cta";
 import CtaMail from "@/sections/CtaMail";
+import Hero from "@/sections/Hero";
 import Popular from "@/sections/Popular";
 import Testimonials from "@/sections/Testimonials";
 import { useEffect, useState } from "react";
@@ -52,6 +53,7 @@ const Home = () => {
 
 	return (
 		<div>
+			<Hero />
 			<CtaOne
 				heading={"Highlights"}
 				subheading={"Nike air with limitless choices"}

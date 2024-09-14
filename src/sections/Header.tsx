@@ -1,9 +1,10 @@
 "use client";
+import { DropdownMenuDemo } from "@/components/DropdownMenu";
 import Loader from "@/components/Loader";
 import useGetUser from "@/hooks/useGetUser";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaRegHeart } from "react-icons/fa";
@@ -28,7 +29,7 @@ const Header = () => {
 	console.log(user);
 	return (
 		<>
-			<div className="flex items-center justify-between z-10 text-center lg:flex fixed lg:my-0 w-full mx-auto bg-white top-0 p-5 border-b border-black/10">
+			<div className="mx-auto max-w-7xl flex  justify-between py-6 px-5 sticky left-auto w-full bg-white top-0">
 				<div className="font-semibold text-xl md:text-2xl">
 					<Link href={"/"}>Nexa</Link>
 				</div>
@@ -56,21 +57,13 @@ const Header = () => {
 						</Link>
 					</div>
 					{user && user?.username?.length > 0 ? (
-						<div className="flex gap-2 flex-col border-2 border-black p-2 rounded-xl items-center">
-							<div className="flex gap-2 items-center">
-								<img
-									src={"assets/p1.jpg"}
-									alt=""
-									className="w-8 h-8 rounded-full"
-								/>
-								<p>{user?.username}</p>
-							</div>
-							<button onClick={handleSignOut}>Sign Out</button>
-						</div>
+						<>
+							<DropdownMenuDemo />
+						</>
 					) : (
 						<div>
 							<Link
-								className="bg-indigo-500 px-3 py-1.5 rounded-md text-white"
+								className="bg-indigo-600 px-5 py-2 rounded-md text-white"
 								href={"/sign-in"}>
 								Sign In
 							</Link>
@@ -153,3 +146,4 @@ const Header = () => {
 };
 
 export default Header;
+// flex items-center justify-center gap-10 z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center lg:flex fixed lg:my-0 w-full mx-auto bg-white top-0 p-5 border-b border-black/10
