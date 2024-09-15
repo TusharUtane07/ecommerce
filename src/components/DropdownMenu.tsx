@@ -8,8 +8,15 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
-export function DropdownMenuDemo() {
+export function DropdownMenuDemo({ signOut }: any) {
+	const navigate = useRouter();
+
+	const goToProfile = () => {
+		navigate.push("/profile");
+	};
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -26,11 +33,15 @@ export function DropdownMenuDemo() {
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem>
-						<button className="w-full text-start">Profile</button>
+						<button onClick={goToProfile} className="w-full text-start">
+							Profile
+						</button>
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 				<DropdownMenuItem>
-					<button className="w-full text-start">Sign out</button>
+					<button onClick={signOut} className="w-full text-start">
+						Sign out
+					</button>
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
+import { signIn } from "@/redux/authSlice";
+import { useDispatch } from "react-redux";
 
 interface SignInFormData {
 	email: string;
@@ -18,6 +20,7 @@ const SignIn: React.FC = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const router = useRouter();
+	const dispatch = useDispatch();
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -41,6 +44,7 @@ const SignIn: React.FC = () => {
 
 			if (data.result) {
 				toast.success("Signed in successfully!");
+				dispatch(signIn());
 				router.push("/");
 			}
 		} catch (error: any) {

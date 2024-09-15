@@ -6,6 +6,8 @@ import { Toaster } from "react-hot-toast";
 import Footer from "@/sections/Footer";
 import Header from "@/sections/Header";
 import { usePathname } from "next/navigation";
+import { store } from "@/redux/store";
+import { Provider } from "react-redux";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -40,10 +42,12 @@ export default function RootLayout({
 			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased px-2`}>
-				{!noHeaderPaths.includes(pathname) && <Header />}
-				{children}
-				<Footer />
-				<Toaster></Toaster>
+				<Provider store={store}>
+					{!noHeaderPaths.includes(pathname) && <Header />}
+					{children}
+					<Footer />
+					<Toaster></Toaster>
+				</Provider>
 			</body>
 		</html>
 	);

@@ -2,31 +2,43 @@
 import { DropdownMenuDemo } from "@/components/DropdownMenu";
 import Loader from "@/components/Loader";
 import useGetUser from "@/hooks/useGetUser";
+import axiosInstance from "@/lib/axios";
+import { signOut } from "@/redux/authSlice";
+import { RootState } from "@/redux/store";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaRegHeart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
 	const [nav, setNav] = useState<boolean>(false);
 	const { user, loading } = useGetUser();
 
-	const pathname = usePathname();
-	console.log(pathname);
-
-	const handleSignOut = () => {
-		toast.success("Signed Out");
-	};
-
+	const dispatch = useDispatch();
+	const isAuthenticated = useSelector(
+		(state: RootState) => state.auth.isAuthenticated
+	);
+	console.log(isAuthenticated);
 	if (loading) {
 		return <Loader />;
 	}
 
-	console.log(user);
+	const handleSignOut = async () => {
+		try {
+			const response = await axiosInstance.get("/api/sign-out");
+			if (response.data.result) {
+				toast.success("Signed Out");
+				dispatch(signOut());
+			}
+		} catch (error) {
+			toast.error("Signing Out Failed");
+		}
+	};
+
 	return (
 		<>
 			<div className="mx-auto max-w-7xl flex  justify-between py-6 px-5 sticky left-auto w-full bg-white top-0">
@@ -56,16 +68,16 @@ const Header = () => {
 							<AiOutlineShoppingCart />{" "}
 						</Link>
 					</div>
-					{user && user?.username?.length > 0 ? (
+					{isAuthenticated ? (
 						<>
-							<DropdownMenuDemo />
+							<DropdownMenuDemo signOut={handleSignOut} />
 						</>
 					) : (
 						<div>
 							<Link
-								className="bg-indigo-600 px-5 py-2 rounded-md text-white"
+								className="bg-indigo-600 px-5 py-3 rounded-md text-white"
 								href={"/sign-in"}>
-								Sign In
+								Get Started
 							</Link>
 						</div>
 					)}
@@ -122,7 +134,7 @@ const Header = () => {
 							Cart
 						</Link>
 					</div>
-					{user && user?.username?.length > 0 ? (
+					{isAuthenticated ? (
 						<div className="flex gap-2 flex-col border-2 border-black p-2 rounded-xl items-center">
 							<div className="flex gap-2 items-center">
 								<img
@@ -136,7 +148,7 @@ const Header = () => {
 						</div>
 					) : (
 						<div>
-							<Link href={"/sign-in"}>Sign In</Link>
+							<Link href={"/sign-in"}>Get Started</Link>
 						</div>
 					)}
 				</div>
