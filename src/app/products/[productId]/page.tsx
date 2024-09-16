@@ -1,4 +1,5 @@
 "use client";
+import Loader from "@/components/Loader";
 import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
 import Link from "next/link";
@@ -11,6 +12,7 @@ import { MdHome } from "react-icons/md";
 //BUG: fix that if there is no product with that id show no product found
 const ProductDetails = ({ params }: any) => {
 	const [productCartCount, setProductCartCount] = useState<number>(1);
+	const [loading, setLoading] = useState<boolean>(true);
 
 	const addToWishList = () => {
 		toast.success("Product Added to wishlist");
@@ -45,12 +47,22 @@ const ProductDetails = ({ params }: any) => {
 			}
 		} catch (error: any) {
 			toast.error(error.message);
+		} finally {
+			setLoading(false);
 		}
 	};
 
 	useEffect(() => {
 		fetchProducts();
 	}, []);
+
+	if (loading) {
+		return (
+			<div>
+				<Loader />
+			</div>
+		);
+	}
 
 	return (
 		<section className="relative mx-4 py-20 lg:py-40">
@@ -186,7 +198,11 @@ const ProductDetails = ({ params }: any) => {
 								</div> */}
 							</div>
 							<p className="text-gray-500 text-base font-normal mb-5">
-								{product?.description}
+								Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum
+								amet delectus quod ullam impedit labore illo sunt corporis ipsa
+								magni. Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								Facere a sit expedita nihil possimus! Necessitatibus, impedit!
+								In repudiandae perferendis laborum.
 							</p>
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-8">
 								<div className="flex sm:items-center sm:justify-center w-full">

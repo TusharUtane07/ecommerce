@@ -45,7 +45,7 @@ const Header = () => {
 
 	return (
 		<>
-			<div className="mx-auto max-w-7xl flex justify-between py-6 px-5 sticky left-auto w-full bg-white top-0">
+			<div className="mx-auto max-w-7xl flex justify-between py-6 px-5 sticky left-auto z-20 w-full bg-white top-0">
 				<div className="font-semibold text-xl md:text-2xl">
 					<Link href={"/"}>Nexa</Link>
 				</div>

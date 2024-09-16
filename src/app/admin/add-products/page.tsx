@@ -38,12 +38,12 @@ const AddProduct = () => {
 			});
 			const data = response.data;
 			toast.success(data.message);
-			setBrand("");
-			setCategory("");
-			setName("");
-			setPrice("");
+			// setBrand("");
+			// setCategory("");
+			// setName("");
+			// setPrice("");
 			setImageUrl("");
-			setDescription("");
+			// setDescription("");
 		} catch (error: any) {
 			const errorMessage = "Failed to add product, Check inputs properly";
 			toast.error(errorMessage);
@@ -173,6 +173,7 @@ const AddProduct = () => {
 										<option selected value="nike">
 											Nike
 										</option>
+										<option value="adidas">Adidas</option>
 									</select>
 								</div>
 							</div>
