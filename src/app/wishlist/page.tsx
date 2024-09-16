@@ -3,16 +3,25 @@ import Loader from "@/components/Loader";
 import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
 import { User } from "@/models/User";
+import { RootState } from "@/redux/store";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { use, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BiTrash } from "react-icons/bi";
+import { useSelector } from "react-redux";
 
 const WishList = () => {
 	const [wishlist, setWishlist] = useState<
 		{ user: User; products: ProductT[] }[]
 	>([]);
 	const [loading, setLoading] = useState<boolean>(true);
+
+	const router = useRouter();
+
+	const isAuthenticated = useSelector(
+		(state: RootState) => state.auth.isAuthenticated
+	);
 
 	const fetchProducts = async () => {
 		try {
@@ -31,8 +40,12 @@ const WishList = () => {
 	};
 
 	useEffect(() => {
-		fetchProducts();
-	}, []);
+		if (isAuthenticated) {
+			fetchProducts();
+		} else {
+			router.push("/sign-in");
+		}
+	}, [isAuthenticated]);
 
 	if (loading) {
 		return <Loader />;

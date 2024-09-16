@@ -6,8 +6,9 @@ import { Toaster } from "react-hot-toast";
 import Footer from "@/sections/Footer";
 import Header from "@/sections/Header";
 import { usePathname } from "next/navigation";
-import { store } from "@/redux/store";
+import { persistor, store } from "@/redux/store";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -43,10 +44,12 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased px-2`}>
 				<Provider store={store}>
-					{!noHeaderPaths.includes(pathname) && <Header />}
-					{children}
-					<Footer />
-					<Toaster></Toaster>
+					<PersistGate loading={null} persistor={persistor}>
+						{!noHeaderPaths.includes(pathname) && <Header />}
+						{children}
+						<Footer />
+						<Toaster></Toaster>
+					</PersistGate>
 				</Provider>
 			</body>
 		</html>

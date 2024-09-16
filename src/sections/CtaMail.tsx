@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const CtaMail = () => {
@@ -13,8 +14,8 @@ const CtaMail = () => {
 							Contact us with any query or any idea.
 						</p>
 					</div>
-					<a
-						href="#"
+					<Link
+						href="/contact"
 						className="flex items-center gap-2 bg-white rounded-full shadow-sm text-lg text-indigo-600 font-semibold py-4 px-8 transition-all duration-500">
 						Get In Touch
 						<svg
@@ -31,7 +32,7 @@ const CtaMail = () => {
 								strokeLinejoin="round"
 							/>
 						</svg>
-					</a>
+					</Link>
 				</div>
 			</div>
 		</section>

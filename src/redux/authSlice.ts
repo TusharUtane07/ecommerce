@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PersistConfig, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 interface AuthState {
     isAuthenticated: boolean;
@@ -22,4 +24,12 @@ const authSlice = createSlice({
 });
 
 export const { signIn, signOut } = authSlice.actions;
-export default authSlice.reducer;
+
+const persistConfig: PersistConfig<AuthState> = {
+    key: 'auth',
+    storage,
+};
+
+const persistedAuthReducer = persistReducer(persistConfig, authSlice.reducer);
+
+export default persistedAuthReducer;

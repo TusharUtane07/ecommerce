@@ -13,16 +13,18 @@ import { FaRegHeart } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
 	const [nav, setNav] = useState<boolean>(false);
 	const { user, loading } = useGetUser();
+	const pathname = usePathname();
 
 	const dispatch = useDispatch();
 	const isAuthenticated = useSelector(
 		(state: RootState) => state.auth.isAuthenticated
 	);
-	console.log(isAuthenticated);
+
 	if (loading) {
 		return <Loader />;
 	}
@@ -39,39 +41,59 @@ const Header = () => {
 		}
 	};
 
+	const isActiveLink = (path: string) => pathname === path;
+
 	return (
 		<>
-			<div className="mx-auto max-w-7xl flex  justify-between py-6 px-5 sticky left-auto w-full bg-white top-0">
+			<div className="mx-auto max-w-7xl flex justify-between py-6 px-5 sticky left-auto w-full bg-white top-0">
 				<div className="font-semibold text-xl md:text-2xl">
 					<Link href={"/"}>Nexa</Link>
 				</div>
 				<div className="hidden lg:flex items-center gap-8 font-medium">
 					<div>
-						<Link href={"/"}>Home</Link>
-					</div>
-					<div>
-						<Link href={"/products"}>Products</Link>
-					</div>
-					<div>
-						<Link href={"/about"}>About</Link>
-					</div>
-					<div>
-						<Link href={"/contact"}>Contact</Link>
-					</div>
-					<div>
-						<Link href={"/wishlist"}>
-							<FaRegHeart />{" "}
+						<Link
+							href={"/"}
+							className={isActiveLink("/") ? "text-indigo-600" : ""}>
+							Home
 						</Link>
 					</div>
 					<div>
-						<Link href={"/cart"}>
-							<AiOutlineShoppingCart />{" "}
+						<Link
+							href={"/products"}
+							className={isActiveLink("/products") ? "text-indigo-600" : ""}>
+							Products
+						</Link>
+					</div>
+					<div>
+						<Link
+							href={"/about"}
+							className={isActiveLink("/about") ? "text-indigo-600" : ""}>
+							About
+						</Link>
+					</div>
+					<div>
+						<Link
+							href={"/contact"}
+							className={isActiveLink("/contact") ? "text-indigo-600" : ""}>
+							Contact
+						</Link>
+					</div>
+					<div>
+						<Link
+							href={"/wishlist"}
+							className={isActiveLink("/wishlist") ? "text-indigo-600" : ""}>
+							<FaRegHeart />
+						</Link>
+					</div>
+					<div>
+						<Link
+							href={"/cart"}
+							className={isActiveLink("/cart") ? "text-indigo-600" : ""}>
+							<AiOutlineShoppingCart />
 						</Link>
 					</div>
 					{isAuthenticated ? (
-						<>
-							<DropdownMenuDemo signOut={handleSignOut} />
-						</>
+						<DropdownMenuDemo signOut={handleSignOut} />
 					) : (
 						<div>
 							<Link
@@ -91,8 +113,8 @@ const Header = () => {
 			<div
 				className={
 					nav
-						? "fixed top-0 left-0 w-screen h-full bg-white text-black  z-10 duration-700"
-						: "fixed top-0 left-[-100%] w-[300px] h-full bg-white  text-black z-10 duration-700"
+						? "fixed top-0 left-0 w-screen h-full bg-white text-black z-10 duration-700"
+						: "fixed top-0 left-[-100%] w-[300px] h-full bg-white text-black z-10 duration-700"
 				}>
 				<div className="flex justify-between mx-6 my-3 md:my-5 md:mx-10">
 					<div className="font-semibold text-xl md:text-2xl">Nexa</div>
@@ -158,4 +180,3 @@ const Header = () => {
 };
 
 export default Header;
-// flex items-center justify-center gap-10 z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center lg:flex fixed lg:my-0 w-full mx-auto bg-white top-0 p-5 border-b border-black/10

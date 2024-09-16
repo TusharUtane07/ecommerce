@@ -6,6 +6,7 @@ import React, { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { signIn } from "@/redux/authSlice";
 import { useDispatch } from "react-redux";
+import { IoMdHome } from "react-icons/io";
 
 interface SignInFormData {
 	email: string;
@@ -61,7 +62,7 @@ const SignIn: React.FC = () => {
 	return (
 		<div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
 			<div className="sm:mx-auto sm:w-full sm:max-w-md">
-				<h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
+				<h2 className="text-center text-3xl leading-9 font-extrabold text-gray-900">
 					Sign in to your account
 				</h2>
 			</div>
@@ -128,6 +129,11 @@ const SignIn: React.FC = () => {
 								</span>
 							</Link>
 						</p>
+						<Link
+							href={"/"}
+							className="text-sm my-2 font-medium text-indigo-600">
+							Go Back to Home{" "}
+						</Link>
 					</div>
 				</div>
 			</div>

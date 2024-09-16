@@ -1,6 +1,24 @@
-import React from "react";
+"use client";
+import { RootState } from "@/redux/store";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Cart = () => {
+	const router = useRouter();
+
+	const isAuthenticated = useSelector(
+		(state: RootState) => state.auth.isAuthenticated
+	);
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			console.log("Cart page");
+		} else {
+			router.push("/sign-in");
+		}
+	}, [isAuthenticated]);
+
 	return (
 		<section className="py-24 lg:py-40 relative">
 			<div className="w-full max-w-7xl px-4 md:px-5 lg-px-6 mx-auto">
