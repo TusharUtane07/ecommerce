@@ -6,7 +6,7 @@ import { ProductT } from "@/models/Product";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaAngleRight } from "react-icons/fa";
+import { FaAngleRight, FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdHome } from "react-icons/md";
 
 // TODO: add proper types
@@ -14,6 +14,7 @@ import { MdHome } from "react-icons/md";
 const ProductDetails = ({ params }: any) => {
 	const [productCartCount, setProductCartCount] = useState<number>(1);
 	const [loading, setLoading] = useState<boolean>(true);
+	const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
 
 	const { user } = useGetUser();
 
@@ -27,6 +28,7 @@ const ProductDetails = ({ params }: any) => {
 			if (response.data.result) {
 				toast.success("Product added to wishlist");
 				fetchProducts();
+				setIsInWishlist(true);
 			} else {
 				toast.error(response.data.message);
 			}
@@ -69,9 +71,48 @@ const ProductDetails = ({ params }: any) => {
 		}
 	};
 
+	const fetchWishlistProducts = async () => {
+		try {
+			const response = await axiosInstance.get(`/api/wishlist`);
+			const data = response.data;
+
+			if (data.result) {
+				const isInWishlist = data.wishlist.products.some(
+					(product: { _id: string }) => product._id === productId
+				);
+				setIsInWishlist(isInWishlist);
+			} else {
+				toast.error(data.message || "Facing some internal server issue");
+			}
+		} catch (error: any) {
+			toast.error("No products in wishlist");
+		}
+	};
+
+	const deleteProductFromWishlist = async (productId: any) => {
+		try {
+			const response = await axiosInstance.delete("/api/wishlist", {
+				data: {
+					userId: user?._id,
+					productId,
+				},
+			});
+			if (response.data.result) {
+				toast.success("Product removed from wishlist");
+				fetchProducts();
+				setIsInWishlist(false);
+			} else {
+				toast.error(response.data.message);
+			}
+		} catch (error: any) {
+			toast.error(error.message || "Error removing product from wishlist");
+		}
+	};
+
 	useEffect(() => {
 		fetchProducts();
-	}, []);
+		fetchWishlistProducts();
+	}, [isInWishlist]);
 
 	if (loading) {
 		return (
@@ -312,25 +353,19 @@ const ProductDetails = ({ params }: any) => {
 								</button>
 							</div>
 							<div className="flex items-center gap-3">
-								<button
-									onClick={() => addToWishList(product?._id)}
-									className="group transition-all duration-500 p-4 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width={26}
-										height={26}
-										viewBox="0 0 26 26"
-										fill="none">
-										<path
-											d="M4.47084 14.3196L13.0281 22.7501L21.9599 13.9506M13.0034 5.07888C15.4786 2.64037 19.5008 2.64037 21.976 5.07888C24.4511 7.5254 24.4511 11.4799 21.9841 13.9265M12.9956 5.07888C10.5204 2.64037 6.49824 2.64037 4.02307 5.07888C1.54789 7.51738 1.54789 11.4799 4.02307 13.9184M4.02307 13.9184L4.04407 13.939M4.02307 13.9184L4.46274 14.3115"
-											stroke="#4F46E5"
-											strokeWidth="1.6"
-											strokeMiterlimit={10}
-											strokeLinecap="round"
-											strokeLinejoin="round"
-										/>
-									</svg>
-								</button>
+								{isInWishlist ? (
+									<button
+										onClick={() => deleteProductFromWishlist(product?._id)}
+										className="group transition-all duration-500 p-4 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
+										<FaHeart />
+									</button>
+								) : (
+									<button
+										onClick={() => addToWishList(product?._id)}
+										className="group transition-all duration-500 p-4 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
+										<FaRegHeart />
+									</button>
+								)}
 								<button className="text-center w-full px-5 py-4 rounded-[100px] bg-indigo-600 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
 									Buy Now
 								</button>
