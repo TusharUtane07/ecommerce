@@ -1,23 +1,44 @@
 "use client";
+import axiosInstance from "@/lib/axios";
+import { CartT } from "@/models/Cart";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
 const Cart = () => {
 	const router = useRouter();
+	const [cart, setCart] = useState<CartT>();
 
 	const isAuthenticated = useSelector(
 		(state: RootState) => state.auth.isAuthenticated
 	);
 
+	const fetchProducts = async () => {
+		try {
+			const response = await axiosInstance.get(`/api/cart`);
+			const data = response.data;
+			if (data.result) {
+				setCart(data.cart.products);
+			} else {
+				toast.error(data.message || "Facing some internal server issue");
+			}
+		} catch (error: any) {
+			toast.error("No products in cart");
+		}
+	};
+
 	useEffect(() => {
 		if (isAuthenticated) {
+			fetchProducts();
 			console.log("Cart page");
 		} else {
 			router.push("/sign-in");
 		}
 	}, [isAuthenticated]);
+
+	console.log(cart);
 
 	return (
 		<section className="py-24 lg:py-40 relative">

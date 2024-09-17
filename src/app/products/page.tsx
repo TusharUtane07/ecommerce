@@ -66,18 +66,9 @@ const Products = () => {
 											<h6 className="font-semibold text-xl leading-8 text-black transition-all duration-500 group-hover:text-indigo-600">
 												{item.name}
 											</h6>
-											<h6 className="font-semibold flex items-center gap-3 text-xl leading-8 group-hover:text-indigo-600">
-												<AiOutlineShoppingCart size={20} />
-												<FaRegHeart size={17} />
-											</h6>
-										</div>
-										<div className="flex items-center justify-between group-hover:text-indigo-600">
-											<h6 className="font-semibold text-sm  ">
+											<h6 className="font-semibold text-xl group-hover:text-indigo-600  ">
 												₹ {item.price}
 											</h6>
-											<p className="mt-2 font-normal text-sm  text-gray-500 group-hover:text-indigo-600">
-												{item.category}
-											</p>
 										</div>
 									</div>
 								</Link>

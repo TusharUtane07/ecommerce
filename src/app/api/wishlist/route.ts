@@ -14,17 +14,13 @@ export async function POST(request: NextRequest) {
 
         const wishlist = await Wishlist.findOne({ user: userId });
 
-        // Check if wishlist exists
         if (wishlist) {
-            // Check if the product is already in the wishlist
             if (wishlist.products.includes(productId)) {
-                return NextResponse.json({ result: false, message: "Item already in wishlist" }, { status: 409 }); // 409 Conflict status
+                return NextResponse.json({ result: false, message: "Item already in wishlist" }, { status: 409 });
             }
-            // If not in wishlist, add the product
             wishlist.products.push(productId);
             await wishlist.save();
         } else {
-            // Create new wishlist if it doesn't exist
             await Wishlist.create({ user: userId, products: [productId] });
         }
 
