@@ -1,5 +1,6 @@
 "use client";
 import Loader from "@/components/Loader";
+import useGetUser from "@/hooks/useGetUser";
 import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
 import Link from "next/link";
@@ -14,8 +15,24 @@ const ProductDetails = ({ params }: any) => {
 	const [productCartCount, setProductCartCount] = useState<number>(1);
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const addToWishList = () => {
-		toast.success("Product Added to wishlist");
+	const { user } = useGetUser();
+
+	const addToWishList = async (productId: any) => {
+		try {
+			const response = await axiosInstance.post("/api/wishlist", {
+				userId: user?._id,
+				productId,
+			});
+
+			if (response.data.result) {
+				toast.success("Product added to wishlist");
+				fetchProducts();
+			} else {
+				toast.error(response.data.message);
+			}
+		} catch (error: any) {
+			toast.error("Error adding product to wishlist");
+		}
 	};
 
 	const addToCart = () => {
@@ -296,7 +313,7 @@ const ProductDetails = ({ params }: any) => {
 							</div>
 							<div className="flex items-center gap-3">
 								<button
-									onClick={addToWishList}
+									onClick={() => addToWishList(product?._id)}
 									className="group transition-all duration-500 p-4 rounded-full bg-indigo-50 hover:bg-indigo-100 hover:shadow-sm hover:shadow-indigo-300">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"

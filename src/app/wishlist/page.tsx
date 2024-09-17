@@ -1,5 +1,6 @@
 "use client";
 import Loader from "@/components/Loader";
+import useGetUser from "@/hooks/useGetUser";
 import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
 import { User } from "@/models/User";
@@ -15,7 +16,6 @@ const WishList = () => {
 	const [wishlist, setWishlist] = useState<
 		{ user: User; products: ProductT[] }[]
 	>([]);
-	const [loading, setLoading] = useState<boolean>(true);
 
 	const router = useRouter();
 
@@ -23,19 +23,38 @@ const WishList = () => {
 		(state: RootState) => state.auth.isAuthenticated
 	);
 
+	const { user, loading } = useGetUser();
+
 	const fetchProducts = async () => {
 		try {
-			const response = await axiosInstance.get("/api/wishlist");
+			const response = await axiosInstance.get(`/api/wishlist`);
 			const data = response.data;
 			if (data.result) {
-				setWishlist(data.wishlist);
+				setWishlist(data.wishlist.products);
 			} else {
 				toast.error(data.message || "Facing some internal server issue");
 			}
 		} catch (error: any) {
-			toast.error(error?.message);
-		} finally {
-			setLoading(false);
+			toast.error("No products in wishlist");
+		}
+	};
+
+	const deleteProductFromWishlist = async (productId: any) => {
+		try {
+			const response = await axiosInstance.delete("/api/wishlist", {
+				data: {
+					userId: user?._id,
+					productId,
+				},
+			});
+			if (response.data.result) {
+				toast.success("Product removed from wishlist");
+				fetchProducts();
+			} else {
+				toast.error(response.data.message);
+			}
+		} catch (error: any) {
+			toast.error(error.message || "Error removing product from wishlist");
 		}
 	};
 
@@ -59,36 +78,34 @@ const WishList = () => {
 				</h2>
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 					{wishlist.length > 0 ? (
-						wishlist.map((item) =>
-							item.products.map((product) => (
-								<Link
-									key={String(product._id)}
-									href={`products/${product._id}`}
-									className="mx-auto border border-black/10 p-2 rounded-xl sm:mr-0 group cursor-pointer lg:mx-auto bg-white transition-all duration-500">
+						wishlist.map((product: any) => (
+							<div
+								key={String(product._id)}
+								className="mx-auto border border-black/10 p-2 rounded-xl sm:mr-0 group cursor-pointer lg:mx-auto bg-white transition-all duration-500">
+								<Link href={`products/${product._id}`}>
+									<img
+										src={product.imageUrl}
+										alt={product.name}
+										className="w-full aspect-square rounded-2xl object-contain"
+									/>
+								</Link>
+								<div className="mt-3 flex items-center justify-between mx-1">
+									<div className="flex items-start flex-col">
+										<h6 className="font-semibold text-sm text-black transition-all duration-500 group-hover:text-indigo-600">
+											{product.name}
+										</h6>
+										<h6 className="font-semibold text-sm text-indigo-600">
+											₹{product.price}
+										</h6>
+									</div>
 									<div>
-										<img
-											src={product.imageUrl}
-											alt={product.name}
-											className="w-full aspect-square rounded-2xl object-contain"
+										<BiTrash
+											onClick={() => deleteProductFromWishlist(product._id)}
 										/>
 									</div>
-									<hr />
-									<div className="mt-3 flex items-center justify-between mx-1">
-										<div className="flex items-start flex-col">
-											<h6 className="font-semibold text-sm text-black transition-all duration-500 group-hover:text-indigo-600">
-												{product.name}
-											</h6>
-											<h6 className="font-semibold text-sm text-indigo-600">
-												₹{product.price}
-											</h6>
-										</div>
-										<div>
-											<BiTrash />
-										</div>
-									</div>
-								</Link>
-							))
-						)
+								</div>
+							</div>
+						))
 					) : (
 						<div className="text-center text-gray-500">
 							No products in your wishlist.
