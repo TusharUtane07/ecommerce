@@ -15,7 +15,9 @@ const ProductDetails = ({ params }: any) => {
 	const [productCartCount, setProductCartCount] = useState<number>(1);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
+	const [product, setProduct] = useState<ProductT>();
 
+	const productId = params.productId;
 	const { user } = useGetUser();
 
 	const addToWishList = async (productId: any) => {
@@ -52,10 +54,6 @@ const ProductDetails = ({ params }: any) => {
 		}
 		setProductCartCount(productCartCount - 1);
 	};
-
-	const [product, setProduct] = useState<ProductT>();
-
-	const productId = params.productId;
 
 	const fetchProducts = async () => {
 		try {

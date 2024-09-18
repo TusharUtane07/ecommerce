@@ -6,27 +6,24 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
     try {
         await dbConnect();
-        const { userId, productId, quantity, price } = await request.json();
+        const { userId, productId, quantity } = await request.json();
 
-        if (!userId || !productId || !quantity || !price) {
-            return NextResponse.json({ result: false, message: "All fields (userId, productId, quantity, price) are required" }, { status: 400 });
+        if (!userId || !productId || !quantity) {
+            return NextResponse.json({ result: false, message: "All fields (userId, productId, quantity) are required" }, { status: 400 });
         }
 
         const cart = await Cart.findOne({ user: userId });
 
         if (cart) {
-            // Convert productId to string to match with existing products in cart
             const existingProduct = cart.products.find(p => String(p.product) === String(productId));
             if (existingProduct) {
                 return NextResponse.json({ result: false, message: "Product already in cart" }, { status: 409 });
             }
 
-            // Add new product to the cart if it's not already present
-            cart.products.push({ product: productId, quantity, price });
+            cart.products.push({ product: productId, quantity });
             await cart.save();
         } else {
-            // Create a new cart with the product
-            await Cart.create({ user: userId, products: [{ product: productId, quantity, price }] });
+            await Cart.create({ user: userId, products: [{ product: productId, quantity }] });
         }
 
         return NextResponse.json({ message: "Product added to cart", result: true }, { status: 201 });
@@ -50,6 +47,39 @@ export async function GET(request: NextRequest) {
         }
 
         return NextResponse.json({ cart, result: true, message: "Cart fetched successfully" }, { status: 200 });
+    } catch (error: any) {
+        return NextResponse.json({ result: false, error: error.message }, { status: 400 });
+    }
+}
+
+export async function DELETE(request: NextRequest) {
+    try {
+        await dbConnect();
+        const { productId } = await request.json();
+
+        const userId = await getDataFromToken(request);
+
+
+        if (!userId || !productId) {
+            return NextResponse.json({ result: false, message: "User ID and Product ID are required" }, { status: 400 });
+        }
+
+        const cart = await Cart.findOne({ user: userId });
+
+        if (!cart) {
+            return NextResponse.json({ result: false, message: "Cart not found" }, { status: 404 });
+        }
+
+        const productIndex = cart.products.findIndex((p) => String(p.product) === String(productId));
+
+        if (productIndex === -1) {
+            return NextResponse.json({ result: false, message: "Product not found in cart" }, { status: 404 });
+        }
+
+        cart.products.splice(productIndex, 1);
+        await cart.save();
+
+        return NextResponse.json({ result: true, message: "Product removed from cart" }, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ result: false, error: error.message }, { status: 400 });
     }

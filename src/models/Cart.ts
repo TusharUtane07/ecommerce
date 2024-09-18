@@ -5,7 +5,6 @@ export interface CartT extends Document {
     products: {
         product: mongoose.Schema.Types.ObjectId;
         quantity: number;
-        price: number;
     }[];
 }
 
@@ -27,11 +26,6 @@ const CartSchema = new Schema({
                 required: true,
                 min: 1,
             },
-            price: {
-                type: Number,
-                required: true,
-                min: 0,
-            }
         }
     ]
 })
