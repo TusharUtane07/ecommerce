@@ -39,8 +39,19 @@ const ProductDetails = ({ params }: any) => {
 		}
 	};
 
-	const addToCart = () => {
-		toast.success("Product Added to Cart");
+	const addToCart = async () => {
+		try {
+			const response = await axiosInstance.post("/api/cart", {
+				productId,
+				quantity: productCartCount,
+			});
+
+			if (response.data.result) {
+				toast.success("Product added to cart");
+			}
+		} catch (error) {
+			toast.error("Failed Add product to cart");
+		}
 	};
 
 	const handleIncreaseItem = () => {
