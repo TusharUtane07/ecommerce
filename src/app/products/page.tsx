@@ -52,6 +52,7 @@ const Products = () => {
 						{products?.map((item) => {
 							return (
 								<Link
+									key={String(item._id)}
 									href={`/products/${item._id}`}
 									className="mx-auto sm:mr-0 group cursor-pointer lg:mx-auto border-2 border-black/20 p-2 rounded-2xl bg-white transition-all duration-500">
 									<div>
