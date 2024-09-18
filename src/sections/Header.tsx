@@ -53,42 +53,52 @@ const Header = () => {
 					<div>
 						<Link
 							href={"/"}
-							className={isActiveLink("/") ? "text-indigo-600" : ""}>
+							className={isActiveLink("/") ? "text-indigo-600 font-bold" : ""}>
 							Home
 						</Link>
 					</div>
 					<div>
 						<Link
 							href={"/products"}
-							className={isActiveLink("/products") ? "text-indigo-600" : ""}>
+							className={
+								isActiveLink("/products") ? "text-indigo-600 font-bold" : ""
+							}>
 							Products
 						</Link>
 					</div>
 					<div>
 						<Link
 							href={"/about"}
-							className={isActiveLink("/about") ? "text-indigo-600" : ""}>
+							className={
+								isActiveLink("/about") ? "text-indigo-600 font-bold" : ""
+							}>
 							About
 						</Link>
 					</div>
 					<div>
 						<Link
 							href={"/contact"}
-							className={isActiveLink("/contact") ? "text-indigo-600" : ""}>
+							className={
+								isActiveLink("/contact") ? "text-indigo-600 font-bold" : ""
+							}>
 							Contact
 						</Link>
 					</div>
 					<div>
 						<Link
 							href={"/wishlist"}
-							className={isActiveLink("/wishlist") ? "text-indigo-600" : ""}>
+							className={
+								isActiveLink("/wishlist") ? "text-indigo-600 font-bold" : ""
+							}>
 							<FaRegHeart />
 						</Link>
 					</div>
 					<div>
 						<Link
 							href={"/cart"}
-							className={isActiveLink("/cart") ? "text-indigo-600" : ""}>
+							className={
+								isActiveLink("/cart") ? "text-indigo-600 font-bold" : ""
+							}>
 							<AiOutlineShoppingCart />
 						</Link>
 					</div>

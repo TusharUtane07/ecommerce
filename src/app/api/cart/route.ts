@@ -60,7 +60,7 @@ export async function PATCH(request: NextRequest) {
         const { productId, quantity } = await request.json();
 
         const userId = await getDataFromToken(request);
-
+        console.log(userId, productId, quantity);
         if (!userId || !productId || !quantity) {
             return NextResponse.json({ result: false, message: "User ID, Product ID and quantity are required" }, { status: 400 });
         }
