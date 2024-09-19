@@ -123,8 +123,8 @@ const Header = () => {
 			<div
 				className={
 					nav
-						? "fixed top-0 left-0 w-screen h-full bg-white text-black z-10 duration-700"
-						: "fixed top-0 left-[-100%] w-[300px] h-full bg-white text-black z-10 duration-700"
+						? "fixed top-0 left-0 w-screen h-full bg-white text-black z-30 duration-700"
+						: "fixed top-0 left-[-100%] w-[300px] h-full bg-white text-black z-30 duration-700"
 				}>
 				<div className="flex justify-between mx-6 my-3 md:my-5 md:mx-10">
 					<div className="font-semibold text-xl md:text-2xl">Nexa</div>

@@ -39,7 +39,7 @@ export default function RootLayout({
 		<html lang="en" data-theme="light">
 			<head>
 				<link rel="shortcut icon" href="/favicon.png" type="image/x-icon" />
-				<title>Eshop | Sneakers Platform</title>
+				<title>Nexa | Sneakers Platform</title>
 			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased px-2`}>

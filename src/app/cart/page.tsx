@@ -1,16 +1,13 @@
 "use client";
 import Loader from "@/components/Loader";
 import axiosInstance from "@/lib/axios";
-import { CartT } from "@/models/Cart";
 import { RootState } from "@/redux/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaEdit } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { any } from "zod";
 
 const Cart = () => {
 	const router = useRouter();
@@ -35,6 +32,13 @@ const Cart = () => {
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	const calculateSubtotal = () => {
+		return cart?.products.reduce(
+			(acc: number, item: any) => acc + item.product.price * item.quantity,
+			0
+		);
 	};
 
 	const handleIncreaseItem = async (productId: any, quantity: any) => {
@@ -286,10 +290,10 @@ const Cart = () => {
 				<div className="bg-gray-50 rounded-xl p-6 w-full mb-8 max-lg:max-w-xl max-lg:mx-auto">
 					<div className="flex items-center justify-between w-full py-6">
 						<p className="font-manrope font-bold text-2xl leading-9 text-gray-900">
-							Total
+							Subtotal
 						</p>
 						<h6 className="font-manrope font-bold text-2xl leading-9 text-indigo-500">
-							₹
+							₹{calculateSubtotal()}
 						</h6>
 					</div>
 				</div>
