@@ -4,6 +4,7 @@ import useGetUser from "@/hooks/useGetUser";
 import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaAngleRight, FaHeart, FaRegHeart } from "react-icons/fa";
@@ -19,6 +20,7 @@ const ProductDetails = ({ params }: any) => {
 
 	const productId = params.productId;
 	const { user } = useGetUser();
+	const router = useRouter();
 
 	const addToWishList = async (productId: any) => {
 		try {
@@ -188,6 +190,10 @@ const ProductDetails = ({ params }: any) => {
 		} catch (error) {
 			toast.error("Error removing item from cart");
 		}
+	};
+
+	const buyNow = (productId: any) => {
+		router.push("/checkout");
 	};
 
 	useEffect(() => {
@@ -444,7 +450,9 @@ const ProductDetails = ({ params }: any) => {
 										<FaRegHeart />
 									</button>
 								)}
-								<button className="text-center w-full px-5 py-4 rounded-[100px] bg-indigo-600 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
+								<button
+									onClick={() => buyNow(product?._id)}
+									className="text-center w-full px-5 py-4 rounded-[100px] bg-indigo-600 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
 									Buy Now
 								</button>
 							</div>
