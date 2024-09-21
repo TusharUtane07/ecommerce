@@ -1,5 +1,8 @@
 "use client";
+import { RootState } from "@/redux/store";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 type LocationData = {
 	[country: string]: string[];
 };
@@ -148,9 +151,11 @@ const Checkout = () => {
 		setSelectedCity(cities[0]);
 	}, [cities]);
 
+	const product = useSelector((state: RootState) => state.checkout.product);
+
 	return (
 		<section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
-			<form action="#" className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+			<form className="mx-auto max-w-screen-xl px-4 2xl:px-0">
 				<div className="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16">
 					<div className="min-w-0 flex-1 space-y-8">
 						<h1 className="text-4xl font-medium capitalize ">
@@ -173,7 +178,6 @@ const Checkout = () => {
 										id="your_name"
 										className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
 										placeholder="Tushar Utane"
-										required
 									/>
 								</div>
 								<div>
@@ -188,7 +192,6 @@ const Checkout = () => {
 										id="your_email"
 										className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
 										placeholder="tusharutane7556@gmail.com"
-										required
 									/>
 								</div>
 								<div>
@@ -247,7 +250,6 @@ const Checkout = () => {
 												id="phone-input"
 												className="z-20 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:border-s-gray-700  dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500"
 												placeholder="+91-7387927556"
-												required
 											/>
 										</div>
 									</div>
@@ -348,13 +350,16 @@ const Checkout = () => {
 										Total
 									</dt>
 									<dd className="text-base font-bold text-gray-900 dark:text-white">
-										$8,392.00
+										₹{product?.price}
 									</dd>
 								</dl>
 							</div>
 						</div>
 						<div>
-							<button className="bg-indigo-600 px-5 py-3 rounded-md text-white w-full font-medium">
+							<button
+								type="button"
+								onClick={() => toast.success("Order placed Thank you")}
+								className="bg-indigo-600 px-5 py-3 rounded-md text-white w-full font-medium">
 								Confirm Order
 							</button>
 						</div>

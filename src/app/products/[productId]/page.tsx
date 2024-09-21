@@ -3,12 +3,22 @@ import Loader from "@/components/Loader";
 import useGetUser from "@/hooks/useGetUser";
 import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
+import { addProductToPurchaseList } from "@/redux/cartSlice";
+import { AppDispatch } from "@/redux/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaAngleRight, FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdHome } from "react-icons/md";
+import { useDispatch } from "react-redux";
+
+interface ProductDetails {
+	id: string;
+	name: string;
+	price: string;
+	quantity: number;
+}
 
 const ProductDetails = ({ params }: any) => {
 	const [productCartCount, setProductCartCount] = useState<number>(1);
@@ -194,7 +204,20 @@ const ProductDetails = ({ params }: any) => {
 		}
 	};
 
-	const buyNow = (productId: any) => {
+	const dispatch: AppDispatch = useDispatch();
+
+	const buyNow = (
+		productId: string,
+		productName: string,
+		productPrice: string
+	) => {
+		const productDetails: ProductDetails = {
+			id: productId,
+			name: productName,
+			price: productPrice,
+			quantity: 1,
+		};
+		dispatch(addProductToPurchaseList(productDetails));
 		router.push("/checkout");
 	};
 
@@ -453,7 +476,13 @@ const ProductDetails = ({ params }: any) => {
 									</button>
 								)}
 								<button
-									onClick={() => buyNow(product?._id)}
+									onClick={() =>
+										buyNow(
+											String(product?._id),
+											String(product?.name),
+											String(product?.price)
+										)
+									}
 									className="text-center w-full px-5 py-4 rounded-[100px] bg-indigo-600 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
 									Buy Now
 								</button>

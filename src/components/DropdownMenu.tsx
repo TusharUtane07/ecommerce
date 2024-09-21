@@ -31,13 +31,13 @@ export function DropdownMenuDemo({ signOut }: any) {
 			<DropdownMenuContent className="w-56">
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuGroup>
+				{/* <DropdownMenuGroup>
 					<DropdownMenuItem>
 						<button onClick={goToProfile} className="w-full text-start">
 							Profile
 						</button>
 					</DropdownMenuItem>
-				</DropdownMenuGroup>
+				</DropdownMenuGroup> */}
 				<DropdownMenuItem>
 					<button onClick={signOut} className="w-full text-start">
 						Sign out
