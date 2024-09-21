@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { persistor, store } from "@/redux/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import GotoTopButton from "@/components/GotoTopButton";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -48,6 +49,7 @@ export default function RootLayout({
 						{!noHeaderPaths.includes(pathname) && <Header />}
 						{children}
 						<Footer />
+						<GotoTopButton />
 						<Toaster></Toaster>
 					</PersistGate>
 				</Provider>

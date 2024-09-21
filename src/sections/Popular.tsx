@@ -30,7 +30,6 @@ const Featured = ({ heading, products }: propsType) => {
 											className="w-full aspect-square rounded-2xl object-contain"
 										/>
 									</div>
-									<hr />
 									<div className="mt-3 flex items-center justify-between mx-1">
 										<div className="flex items-start flex-col">
 											<h6 className="font-semibold text-sm text-black transition-all duration-500 group-hover:text-indigo-600">

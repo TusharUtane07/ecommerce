@@ -6,6 +6,7 @@ import CtaOne from "@/sections/Cta";
 import CtaMail from "@/sections/CtaMail";
 import Hero from "@/sections/Hero";
 import Popular from "@/sections/Popular";
+import SaleProduct from "@/sections/SaleProduct";
 import Testimonials from "@/sections/Testimonials";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -73,7 +74,14 @@ const Home = () => {
 				buttonText={"explore more"}
 				img={"/assets/sections/nike-air-4.png"}
 			/>
-			<Popular heading="Top Rated Sales" products={topRated} />
+			<Popular heading="Top Rated Products" products={topRated} />
+			<SaleProduct
+				heading="Sale"
+				subheading="Get this amazing sneaker before time"
+				paragraph="Our purpose is to move the world forward. We take action by building community, protecting our planet, and increasing sport. Through innovative design and sustainable practices, we craft footwear that fuels your every step."
+				img="/assets/sections/nike-air-3.png"
+				buttonText="Explore More"
+			/>
 			<Testimonials />
 			<CtaMail />
 		</div>

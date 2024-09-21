@@ -37,7 +37,7 @@ const ProductDetails = ({ params }: any) => {
 				toast.error(response.data.message);
 			}
 		} catch (error: any) {
-			toast.error("Error adding product to wishlist");
+			toast.error("Failed to add product to wishlist | Please Sign in");
 		}
 	};
 
@@ -53,7 +53,7 @@ const ProductDetails = ({ params }: any) => {
 				setIsInCartList(true);
 			}
 		} catch (error) {
-			toast.error("Failed Add product to cart");
+			toast.error("Failed to add product to cart | Please Sign in");
 		}
 	};
 

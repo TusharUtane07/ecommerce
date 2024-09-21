@@ -6,7 +6,7 @@ import { BsStarFill } from "react-icons/bs";
 const Testimonials = () => {
 	return (
 		<section className="">
-			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<div className="mx-auto max-w-7xl py-20 px-4 sm:px-6 lg:px-8">
 				<h2 className="font-manrope capitalize font-bold text-4xl text-black mb-8 max-lg:text-center">
 					Testimonials
 				</h2>

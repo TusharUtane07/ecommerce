@@ -59,7 +59,7 @@ const ProductsGrid = ({ products, resetPage, setResetPage }: any) => {
 				<button
 					onClick={() => handlePageChange(currentPage - 1)}
 					disabled={currentPage === 1}
-					className={`px-4 py-2 border rounded-lg transition-all duration-300 ${
+					className={`sm:px-4 px-2 py-1 sm:py-2 border rounded-lg transition-all duration-300 ${
 						currentPage === 1
 							? "bg-gray-300 text-gray-500 cursor-not-allowed"
 							: "bg-gray-200 text-black hover:bg-indigo-600 hover:text-white"
@@ -71,7 +71,7 @@ const ProductsGrid = ({ products, resetPage, setResetPage }: any) => {
 					<button
 						key={page}
 						onClick={() => handlePageChange(page)}
-						className={`px-4 py-2 border rounded-lg transition-all duration-300 ${
+						className={`sm:px-4 px-2 py-1 sm:py-2 border rounded-lg transition-all duration-300 ${
 							currentPage === page
 								? "bg-indigo-600 text-white"
 								: "bg-gray-200 text-black hover:bg-indigo-600 hover:text-white"
@@ -82,7 +82,7 @@ const ProductsGrid = ({ products, resetPage, setResetPage }: any) => {
 				<button
 					onClick={() => handlePageChange(currentPage + 1)}
 					disabled={currentPage === totalPages}
-					className={`px-4 py-2 border rounded-lg transition-all duration-300 ${
+					className={`sm:px-4 px-2 py-1 sm:py-2 border rounded-lg transition-all duration-300 ${
 						currentPage === totalPages
 							? "bg-gray-300 text-gray-500 cursor-not-allowed"
 							: "bg-gray-200 text-black hover:bg-indigo-600 hover:text-white"

@@ -16,7 +16,7 @@ const Footer = () => {
 					<aside>
 						<Image src={"/favicon.png"} alt="Logo" height={100} width={100} />
 						<p>
-							<span className="font-medium text-lg">Next Ride</span>
+							<span className="font-medium text-lg">Nexa</span>
 							<br />
 							Providing reliable services since 2024
 						</p>
