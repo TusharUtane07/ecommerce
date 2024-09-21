@@ -14,10 +14,7 @@ import { MdHome } from "react-icons/md";
 import { useDispatch } from "react-redux";
 
 interface ProductDetails {
-	id: string;
-	name: string;
 	price: string;
-	quantity: number;
 }
 
 const ProductDetails = ({ params }: any) => {
@@ -212,10 +209,7 @@ const ProductDetails = ({ params }: any) => {
 		productPrice: string
 	) => {
 		const productDetails: ProductDetails = {
-			id: productId,
-			name: productName,
 			price: productPrice,
-			quantity: 1,
 		};
 		dispatch(addProductToPurchaseList(productDetails));
 		router.push("/checkout");

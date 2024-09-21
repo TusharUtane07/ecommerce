@@ -1,18 +1,21 @@
 "use client";
 import Loader from "@/components/Loader";
 import axiosInstance from "@/lib/axios";
-import { RootState } from "@/redux/store";
+import { AppDispatch, RootState } from "@/redux/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdOutlineDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import ProductDetails from "../products/[productId]/page";
+import { addProductToPurchaseList } from "@/redux/cartSlice";
 
 const Cart = () => {
 	const router = useRouter();
 	const [cart, setCart] = useState<any>();
 	const [loading, setLoading] = useState<boolean>(true);
+	const [products, setProducts] = useState<ProductDetails[]>([{ price: "" }]);
 
 	const isAuthenticated = useSelector(
 		(state: RootState) => state.auth.isAuthenticated
@@ -83,6 +86,16 @@ const Cart = () => {
 		} catch (error) {
 			toast.error("Error removing item from cart");
 		}
+	};
+
+	const dispatch: AppDispatch = useDispatch();
+
+	const buyNow = () => {
+		const productDetails: ProductDetails = {
+			price: calculateSubtotal(),
+		};
+		dispatch(addProductToPurchaseList(productDetails));
+		router.push("/checkout");
 	};
 
 	useEffect(() => {
@@ -319,7 +332,9 @@ const Cart = () => {
 							/>
 						</svg>
 					</Link>
-					<button className="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-indigo-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-indigo-700">
+					<button
+						onClick={buyNow}
+						className="rounded-full w-full max-w-[280px] py-4 text-center justify-center items-center bg-indigo-600 font-semibold text-lg text-white flex transition-all duration-500 hover:bg-indigo-700">
 						Continue to Payment
 						<svg
 							className="ml-2"
