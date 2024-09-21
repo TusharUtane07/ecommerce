@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
+import { signIn } from "@/redux/authSlice";
+import { useDispatch } from "react-redux";
 
 interface SignUpFormData {
 	username: string;
@@ -18,6 +20,7 @@ const SignUp: React.FC = () => {
 		password: "",
 	});
 	const [loading, setLoading] = useState<boolean>(false);
+	const [loadingGuest, setLoadingGuest] = useState<boolean>(false);
 
 	const router = useRouter();
 
@@ -54,6 +57,27 @@ const SignUp: React.FC = () => {
 			}
 		} finally {
 			setLoading(false);
+		}
+	};
+
+	const dispatch = useDispatch();
+
+	const signInWithGuestId = async () => {
+		try {
+			const response = await axiosInstance.post("/api/guest-sign-in/");
+			const data = await response.data;
+
+			if (data.result) {
+				toast.success("Guest Signed in Successfully");
+				dispatch(signIn());
+				router.push("/");
+			}
+		} catch (error: any) {
+			if (error.response && error.response.data) {
+				toast.error("Guest Sign in Error");
+			}
+		} finally {
+			setLoadingGuest(false);
 		}
 	};
 
@@ -133,6 +157,15 @@ const SignUp: React.FC = () => {
 								}`}
 								disabled={loading}>
 								{loading ? "Signing up..." : "Sign up"}
+							</button>
+							<button
+								type="button"
+								onClick={signInWithGuestId}
+								className={`w-full my-2 flex justify-center py-2 px-4 border  text-sm font-medium rounded-md bg-indigo-50 text-indigo-600 transition-all duration-500 hover:bg-indigo-100 ease-in-out ${
+									loadingGuest ? "opacity-50 cursor-not-allowed" : ""
+								}`}
+								disabled={loadingGuest}>
+								{loadingGuest ? "Signing in..." : "Continue as Guest"}
 							</button>
 						</div>
 					</form>
