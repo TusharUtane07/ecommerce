@@ -130,7 +130,8 @@ const ProductDetails = ({ params }: any) => {
 				);
 				setIsInWishlist(isInWishlist);
 			} else {
-				toast.error(data.message || "Facing some internal server issue");
+				// toast.error(data.message || "Facing some internal server issue");
+				console.log("This product is not in wishlist");
 			}
 		} catch (error: any) {
 			toast.error("No products in wishlist");
@@ -150,7 +151,8 @@ const ProductDetails = ({ params }: any) => {
 				);
 				setIsInCartList(isInCartList);
 			} else {
-				toast.error(data.message || "Facing some internal server issue");
+				// toast.error(data.message || "Facing some internal server issue");
+				console.log("This product is not in cart");
 			}
 		} catch (error: any) {
 			console.log("No products in cart list");

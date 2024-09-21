@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import {
@@ -7,140 +8,91 @@ import {
 	FaUser,
 	FaYoutube,
 } from "react-icons/fa";
-// TODO: work on this section
 const Footer = () => {
 	return (
 		<footer className="bg-white">
 			<div className="mx-auto w-full max-w-7xl px-4 md:px-5 lg:px-6">
-				<div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
-					<div>
-						<h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
-							Company
-						</h2>
-						<ul className="text-gray-500 font-medium">
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									About
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Careers
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Brand Center
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Blog
-								</a>
-							</li>
-						</ul>
-					</div>
-					<div>
-						<h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
-							Help center
-						</h2>
-						<ul className="text-gray-500 font-medium">
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Discord Server
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Twitter
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Facebook
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Contact Us
-								</a>
-							</li>
-						</ul>
-					</div>
-					<div>
-						<h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
-							Legal
-						</h2>
-						<ul className="text-gray-500 font-medium">
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Privacy Policy
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Licensing
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Terms &amp; Conditions
-								</a>
-							</li>
-						</ul>
-					</div>
-					<div>
-						<h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">
-							Download
-						</h2>
-						<ul className="text-gray-500 font-medium">
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									iOS
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Android
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									Windows
-								</a>
-							</li>
-							<li className="mb-4">
-								<a href="#" className="hover:underline">
-									MacOS
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
+				<footer className="footer max-w-7xl mx-auto w-full text-base-content p-10">
+					<aside>
+						<Image src={"/favicon.png"} alt="Logo" height={100} width={100} />
+						<p>
+							<span className="font-medium text-lg">Next Ride</span>
+							<br />
+							Providing reliable services since 2024
+						</p>
+					</aside>
+					<nav>
+						<h6 className="footer-title">Navigation</h6>
+						<Link href={"/"} className="link link-hover">
+							Home
+						</Link>
+						<Link href={"/products"} className="link link-hover">
+							Products
+						</Link>
+						<Link href={"/about"} className="link link-hover">
+							About Us
+						</Link>
+						<Link href={"/contact"} className="link link-hover">
+							Contact Us
+						</Link>
+					</nav>
+					<nav>
+						<h6 className="footer-title">Socials</h6>
+						<Link href={"/"} className="link link-hover">
+							Instagram
+						</Link>
+						<Link href={"/"} className="link link-hover">
+							Facebook
+						</Link>
+						<Link href={"/"} className="link link-hover">
+							Youtube
+						</Link>
+						<Link href={"/"} className="link link-hover">
+							Twitter
+						</Link>
+					</nav>
+					<nav>
+						<h6 className="footer-title">Legal</h6>
+						<p className="link link-hover">Terms of use</p>
+						<p className="link link-hover">Privacy policy</p>
+						<p className="link link-hover">Cookie policy</p>
+					</nav>
+				</footer>
 				<hr />
 				<div className="px-4 py-6  md:flex md:items-center md:justify-between">
 					<span className="text-sm text-gray-500 sm:text-center">
 						© 2024{" "}
-						<a target="_blank" href="https://www.tusharutane.com/">
+						<Link target="_blank" href="https://www.tusharutane.com/">
 							Tushar Utane
-						</a>
+						</Link>
 						. All Rights Reserved.
 					</span>
-					{/* TODO: add links here */}
 					<div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse">
-						<Link href="#" className="text-gray-400 hover:text-gray-900">
+						<Link
+							target="_blank"
+							href="https://www.instagram.com/tushar_utane/"
+							className="text-gray-400 hover:text-gray-900">
 							<FaInstagramSquare />
 						</Link>
-						<Link href="#" className="text-gray-400 hover:text-gray-900">
+						<Link
+							target="_blank"
+							href="https://twitter.com/tusharutane2"
+							className="text-gray-400 hover:text-gray-900">
 							<FaTwitter />
 						</Link>
 						<Link href="#" className="text-gray-400 hover:text-gray-900">
 							<FaYoutube />
 						</Link>
-						<Link href="#" className="text-gray-400 hover:text-gray-900">
+						<Link
+							target="_blank"
+							href="https://www.linkedin.com/in/tushar-utane-492b00260/"
+							className="text-gray-400 hover:text-gray-900">
 							<FaLinkedin />
 						</Link>
-						<Link href="#" className="text-gray-400 hover:text-gray-900">
+						<Link
+							target="_blank"
+							href="https://www.tusharutane.com"
+							className="text-gray-400 hover:text-gray-900">
 							<FaUser />
 						</Link>
 					</div>

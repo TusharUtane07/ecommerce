@@ -7,8 +7,8 @@ const ProductsGrid = ({ products, resetPage, setResetPage }: any) => {
 
 	useEffect(() => {
 		if (resetPage) {
-			setCurrentPage(1); // Reset page to 1 when filters change
-			setResetPage(false); // Reset the state after setting the page
+			setCurrentPage(1);
+			setResetPage(false);
 		}
 	}, [resetPage, setResetPage]);
 
