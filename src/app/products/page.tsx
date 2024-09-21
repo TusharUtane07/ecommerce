@@ -2,6 +2,7 @@
 import Loader from "@/components/Loader";
 import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
+import ProductsGrid from "@/sections/ProductGrid";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -14,6 +15,7 @@ const Products = () => {
 	const [filteredProducts, setFilteredProducts] = useState<ProductT[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [filterOpen, setFilterOpen] = useState<boolean>(false);
+	const [resetPage, setResetPage] = useState<boolean>(false);
 	const [filters, setFilters] = useState({
 		sortBy: "none",
 		category: "all",
@@ -53,6 +55,7 @@ const Products = () => {
 		}
 
 		setFilteredProducts(filtered);
+		setResetPage(true);
 	};
 
 	useEffect(() => {
@@ -112,34 +115,11 @@ const Products = () => {
 							<span>Clear</span>
 						</button>
 					</div>
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-						{filteredProducts.map((item) => {
-							return (
-								<Link
-									key={String(item._id)}
-									href={`/products/${item._id}`}
-									className="mx-auto sm:mr-0 group cursor-pointer lg:mx-auto border-2 border-black/20 p-2 rounded-2xl bg-white transition-all duration-500">
-									<div>
-										<img
-											src={item.imageUrl}
-											alt={item.name}
-											className="w-full aspect-square rounded-2xl hover:scale-105 duration-200 object-cover"
-										/>
-									</div>
-									<div className="mt-5 mx-2">
-										<div className="flex items-center justify-between">
-											<h6 className="font-semibold text-xl leading-8 text-black transition-all duration-500 group-hover:text-indigo-600">
-												{item.name}
-											</h6>
-											<h6 className="font-semibold text-xl group-hover:text-indigo-600">
-												₹ {item.price}
-											</h6>
-										</div>
-									</div>
-								</Link>
-							);
-						})}
-					</div>
+					<ProductsGrid
+						products={filteredProducts}
+						resetPage={resetPage}
+						setResetPage={setResetPage}
+					/>
 					<div className="fixed bg-white bottom-0 z-10 w-full lg:hidden px-5 left-0 flex justify-between py-3 gap-3 border-t-2 border-black/10">
 						<button
 							onClick={() => setFilterOpen(!filterOpen)}
@@ -226,22 +206,6 @@ const Products = () => {
 										setFilterOpen(!filterOpen);
 									}}>
 									Featured
-								</div>
-								<div
-									className="cursor-pointer"
-									onClick={() => {
-										setFilters({ ...filters, category: "trending" });
-										setFilterOpen(!filterOpen);
-									}}>
-									Trending
-								</div>
-								<div
-									className="cursor-pointer"
-									onClick={() => {
-										setFilters({ ...filters, category: "sale" });
-										setFilterOpen(!filterOpen);
-									}}>
-									Sale
 								</div>
 							</div>
 						</div>

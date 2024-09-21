@@ -6,7 +6,6 @@ import React, { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { signIn } from "@/redux/authSlice";
 import { useDispatch } from "react-redux";
-import { IoMdHome } from "react-icons/io";
 
 interface SignInFormData {
 	email: string;

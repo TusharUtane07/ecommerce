@@ -28,7 +28,7 @@ const Home = () => {
 				);
 
 				const topRatedProducts = data?.products.filter(
-					(item: ProductT) => item.category === "popular"
+					(item: ProductT) => item.category === "featured"
 				);
 
 				setPopular(popularProducts);
@@ -73,7 +73,7 @@ const Home = () => {
 				buttonText={"explore more"}
 				img={"/assets/sections/nike-air-4.png"}
 			/>
-			<Popular heading="Top Rated Sales" products={popular} />
+			<Popular heading="Top Rated Sales" products={topRated} />
 			<Testimonials />
 			<CtaMail />
 		</div>

@@ -14,7 +14,7 @@ const CtaOne = ({ heading, subheading, paragraph, buttonText, img }: props) => {
 	return (
 		<div className="my-8 mx-5 md:px-8 md:mx-auto md:max-w-7xl flex flex-col md:flex-row md:items-center md:justify-between gap-3">
 			<div className="flex flex-col gap-1">
-				<h4 className="text-2xl md:text-4xl uppercase text-blue-500 font-extrabold">
+				<h4 className="text-2xl md:text-4xl uppercase text-indigo-600 font-extrabold">
 					{heading}
 				</h4>
 				<h6 className="font-extrabold text-2xl md:text-3xl uppercase">
