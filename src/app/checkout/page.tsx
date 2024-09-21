@@ -1,5 +1,6 @@
 "use client";
 import { RootState } from "@/redux/store";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -153,6 +154,12 @@ const Checkout = () => {
 
 	const product = useSelector((state: RootState) => state.checkout.product);
 
+	const router = useRouter();
+	const orderConfirmed = () => {
+		toast.success("Order Placed | Thank you");
+		router.push("/");
+	};
+
 	return (
 		<section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
 			<form className="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -260,6 +267,7 @@ const Checkout = () => {
 							<h3 className="text-xl font-semibold text-gray-900 dark:text-white">
 								Payment
 							</h3>
+							<p>Currently working on Payment Gateway Integration</p>
 							<div className="grid grid-cols-1 gap-4 md:grid-cols-3">
 								<div className="rounded-lg border border-gray-200 bg-gray-50 p-4 ps-4 dark:border-gray-700 dark:bg-gray-800">
 									<div className="flex items-start">
@@ -358,7 +366,7 @@ const Checkout = () => {
 						<div>
 							<button
 								type="button"
-								onClick={() => toast.success("Order placed Thank you")}
+								onClick={orderConfirmed}
 								className="bg-indigo-600 px-5 py-3 rounded-md text-white w-full font-medium">
 								Confirm Order
 							</button>
