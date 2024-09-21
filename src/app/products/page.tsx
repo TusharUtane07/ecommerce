@@ -3,10 +3,9 @@ import Loader from "@/components/Loader";
 import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
 import ProductsGrid from "@/sections/ProductGrid";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { IoFilterSharp } from "react-icons/io5";
+import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { MdOutlineClear } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
 
@@ -16,6 +15,7 @@ const Products = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [filterOpen, setFilterOpen] = useState<boolean>(false);
 	const [resetPage, setResetPage] = useState<boolean>(false);
+	const [searchQuery, setSearchQuery] = useState<string>("");
 	const [filters, setFilters] = useState({
 		sortBy: "none",
 		category: "all",
@@ -54,6 +54,12 @@ const Products = () => {
 			filtered = filtered.filter((item) => item.category === filters.category);
 		}
 
+		if (searchQuery) {
+			filtered = filtered.filter((product) =>
+				product.name.toLowerCase().includes(searchQuery.toLowerCase())
+			);
+		}
+
 		setFilteredProducts(filtered);
 		setResetPage(true);
 	};
@@ -64,7 +70,7 @@ const Products = () => {
 
 	useEffect(() => {
 		applyFilters();
-	}, [filters]);
+	}, [filters, searchQuery]);
 
 	if (loading) {
 		return <Loader />;
@@ -74,13 +80,13 @@ const Products = () => {
 		return (
 			<>
 				<div className="h-[80vh]">
-					<div className=" flex items-center justify-center text-center text-xl font-semibold mt-10 ">
+					<div className="flex items-center justify-center text-center text-xl font-semibold mt-10">
 						No products found
 					</div>
-					<div className=" bg-white px-5 flex justify-center py-3 gap-3 ">
+					<div className="bg-white px-5 flex justify-center py-3 gap-3">
 						<button
 							onClick={() => setFilters({ sortBy: "none", category: "all" })}
-							className="flex items-center gap-3  py-2 px-6 rounded-full bg-indigo-50 text-indigo-600 font-semibold duration-500  justify-center hover:bg-indigo-100">
+							className="flex items-center gap-3 py-2 px-6 rounded-full bg-indigo-50 text-indigo-600 font-semibold duration-500 justify-center hover:bg-indigo-100">
 							<MdOutlineClear />
 							<span>Clear Filters</span>
 						</button>
@@ -101,7 +107,7 @@ const Products = () => {
 			</section>
 			<section className="py-24">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-					<div className=" bg-white   w-full px-5 left-0 lg:flex justify-between py-3 gap-3 sticky top-[83px] hidden">
+					<div className=" bg-white w-full px-5 left-0 lg:flex justify-between py-3 gap-3 sticky z-10 top-[83px] hidden">
 						<button
 							onClick={() => setFilterOpen(!filterOpen)}
 							className="flex items-center gap-3 text-center px-6 w-full py-2 rounded-[100px] bg-indigo-600 justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-400">
@@ -115,6 +121,26 @@ const Products = () => {
 							<span>Clear</span>
 						</button>
 					</div>
+
+					<div className="flex items-center max-w-7xl mx-auto my-4">
+						<label htmlFor="simple-search" className="sr-only">
+							Search
+						</label>
+						<div className="relative w-full flex gap-2">
+							<div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+								<IoSearchSharp />
+							</div>
+							<input
+								type="text"
+								id="simple-search"
+								className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block md:py-2 w-full ps-10 p-2.5 focus:outline-none md:text-xl focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600"
+								placeholder="Search products"
+								value={searchQuery}
+								onChange={(e) => setSearchQuery(e.target.value)}
+							/>
+						</div>
+					</div>
+
 					<ProductsGrid
 						products={filteredProducts}
 						resetPage={resetPage}
@@ -149,64 +175,32 @@ const Products = () => {
 									<RxCross1 />
 								</div>
 							</div>
-							<div className="flex items-center justify-evenly flex-col gap-4 text-xl font-semibold mt-10 md:text-2xl">
-								<div
-									className="cursor-pointer"
-									onClick={() => {
-										setFilters({ ...filters, sortBy: "low-to-high" });
-										setFilterOpen(!filterOpen);
-									}}>
-									<span>Low to High</span>
-								</div>
-								<div
-									className="cursor-pointer"
-									onClick={() => {
-										setFilters({ ...filters, sortBy: "high-to-low" });
-										setFilterOpen(!filterOpen);
-									}}>
-									<span>High to Low</span>
-								</div>
-								<div className="border-t-2 border-black/20 pt-5 cursor-pointer w-full text-center">
-									<div
-										onClick={() => {
-											setFilters({ ...filters, category: "men" });
-											setFilterOpen(!filterOpen);
-										}}>
-										Men
-									</div>
-								</div>
-								<div
-									className="cursor-pointer"
-									onClick={() => {
-										setFilters({ ...filters, category: "women" });
-										setFilterOpen(!filterOpen);
-									}}>
-									Women
-								</div>
-								<div
-									className="cursor-pointer"
-									onClick={() => {
-										setFilters({ ...filters, category: "kids" });
-										setFilterOpen(!filterOpen);
-									}}>
-									Kids
-								</div>
-								<div
-									className="border-t-2 border-black/20 pt-5 cursor-pointer w-full text-center"
-									onClick={() => {
-										setFilters({ ...filters, category: "popular" });
-										setFilterOpen(!filterOpen);
-									}}>
-									Popular
-								</div>
-								<div
-									className="cursor-pointer"
-									onClick={() => {
-										setFilters({ ...filters, category: "featured" });
-										setFilterOpen(!filterOpen);
-									}}>
-									Featured
-								</div>
+							<div className="flex items-center px-6 py-4 gap-2 text-lg md:text-xl">
+								<p>Sort By</p>
+								<select
+									className="w-full p-2 md:p-3 border border-black/10 rounded-md"
+									value={filters.sortBy}
+									onChange={(e) =>
+										setFilters({ ...filters, sortBy: e.target.value })
+									}>
+									<option value="none">None</option>
+									<option value="low-to-high">Price: Low to High</option>
+									<option value="high-to-low">Price: High to Low</option>
+								</select>
+							</div>
+							<div className="flex items-center px-6 py-4 gap-2 text-lg md:text-xl">
+								<p>Category</p>
+								<select
+									className="w-full p-2 md:p-3 border border-black/10 rounded-md"
+									value={filters.category}
+									onChange={(e) =>
+										setFilters({ ...filters, category: e.target.value })
+									}>
+									<option value="all">All</option>
+									<option value="tech">Tech</option>
+									<option value="home">Home</option>
+									<option value="sports">Sports</option>
+								</select>
 							</div>
 						</div>
 					</div>

@@ -7,7 +7,7 @@ const Hero = () => {
 			<div className="mx-auto max-w-2xl py-20 sm:py-48 md:py-32 lg:py-32">
 				<div className="hidden sm:mb-8 sm:flex sm:justify-center">
 					<div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-						Announcing our next best products soon{" "}
+						Announcing our next best sneakers soon{" "}
 					</div>
 				</div>
 				<div className="text-center">
