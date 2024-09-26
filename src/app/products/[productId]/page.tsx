@@ -141,7 +141,8 @@ const ProductDetails = ({ params }: any) => {
 				console.log("This product is not in wishlist");
 			}
 		} catch (error: any) {
-			toast.error("No products in wishlist");
+			// toast.error("No products in wishlist");
+			console.log("No products in wishlist");
 		}
 	};
 
