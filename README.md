@@ -1,6 +1,6 @@
 # 🛒 E-Commerce Platform NEXA
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://nexa-mocha.vercel.app/)  
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://nexa-mocha.vercel.app/)
 [![Portfolio](https://img.shields.io/badge/Portfolio-TusharUtane-blue)](https://www.tusharutane.com)
 
 ## 📖 Overview
