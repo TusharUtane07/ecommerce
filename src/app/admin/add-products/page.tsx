@@ -1,13 +1,16 @@
 "use client";
 import axiosInstance from "@/lib/axios";
+import { RootState } from "@/redux/store";
 import axios from "axios";
 import {
 	CldUploadButton,
 	CloudinaryUploadWidgetResults,
 } from "next-cloudinary";
 import Image from "next/image";
-import React, { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 // TODO: add breadcrumb to go back to home and also go to show products
 const AddProduct = () => {
@@ -49,6 +52,25 @@ const AddProduct = () => {
 			toast.error(errorMessage);
 		}
 	};
+
+	const isAuthenticated = useSelector(
+		(state: RootState) => state.auth.isAuthenticated
+	);
+	const [user, setUser] = useState("not-user"); // change this later according to user details
+	const router = useRouter();
+	useEffect(() => {
+		if (isAuthenticated) {
+			if (user === "user") {
+				toast.success("Welcome Admin");
+			} else {
+				toast.error("This page is for Admin only admins can sign-in");
+				router.push("/sign-in");
+			}
+		} else {
+			toast.success("This page is for Admin only admins can sign-in");
+			router.push("/sign-in");
+		}
+	}, [isAuthenticated]);
 
 	return (
 		<section className="py-24 lg:py-40 relative">

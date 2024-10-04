@@ -2,6 +2,7 @@
 import Loader from "@/components/Loader";
 import axiosInstance from "@/lib/axios";
 import { ProductT } from "@/models/Product";
+import { RootState } from "@/redux/store";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -9,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const ShowProduct = () => {
 	const [products, setProducts] = useState<ProductT[] | null>(null);
@@ -32,6 +34,24 @@ const ShowProduct = () => {
 			setLoading(false);
 		}
 	};
+
+	const isAuthenticated = useSelector(
+		(state: RootState) => state.auth.isAuthenticated
+	);
+	const [user, setUser] = useState("not-user"); // change this later according to user details
+	useEffect(() => {
+		if (isAuthenticated) {
+			if (user === "user") {
+				toast.success("Welcome Admin");
+			} else {
+				toast.error("This page is for Admin only admins can sign-in");
+				router.push("/sign-in");
+			}
+		} else {
+			toast.success("This page is for Admin only admins can sign-in");
+			router.push("/sign-in");
+		}
+	}, [isAuthenticated]);
 
 	const deleteProduct = async (productId: any) => {
 		try {
